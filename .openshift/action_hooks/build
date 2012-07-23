@@ -10,3 +10,6 @@ cd $OPENSHIFT_REPO_DIR
 wget http://getcomposer.org/composer.phar
 chmod 755 composer.phar
 php composer.phar update
+
+mkdir -p app/cache
+chmod -v 777 app/cache
