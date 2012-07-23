@@ -7,4 +7,6 @@
 
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteRule ^(.*)$ app.php [QSA,L]
+
+    php_value "date.timezone" "Europe/London"
 </IfModule>
