@@ -4,6 +4,8 @@
 # before the deploy step.  This script gets executed directly, so it
 # could be python, php, ruby, etc.
 
+unset GIT_DIR
+
 cd $OPENSHIFT_REPO_DIR
 wget http://getcomposer.org/composer.phar
 chmod 755 composer.phar
