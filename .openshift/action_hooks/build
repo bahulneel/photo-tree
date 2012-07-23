@@ -5,4 +5,5 @@
 # could be python, php, ruby, etc.
 
 cd $OPENSHIFT_REPO_DIR
-./composer.phar update
+ls
+php composer.phar update
