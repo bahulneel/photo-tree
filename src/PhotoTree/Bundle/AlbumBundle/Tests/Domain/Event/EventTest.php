@@ -1,5 +1,5 @@
 <?php
-namespace PhotoTree\Bundle\AlbumBundle\Domain;
+namespace PhotoTree\Bundle\AlbumBundle\Domain\Event;
 
 use Mockery as m;
 
@@ -7,7 +7,7 @@ class EventTest extends \PHPUnit_Framework_TestCase
 {
     public function testAnEventCanHaveAParticipant()
     {
-        $participant = m::mock('PhotoTree\Bundle\AlbumBundle\Domain\Event\Participant');
+        $participant = m::mock('PhotoTree\Bundle\AlbumBundle\Domain\Event\Participant\Participant');
 
         $event = new Event;
 
@@ -25,10 +25,10 @@ class EventTest extends \PHPUnit_Framework_TestCase
      */
     public function testAnEventCanHaveMoreThanOneParticipant()
     {
-        $participant1 = m::mock('PhotoTree\Bundle\AlbumBundle\Domain\Event\Participant', array(
+        $participant1 = m::mock('PhotoTree\Bundle\AlbumBundle\Domain\Event\Participant\Participant', array(
             'getPerson' => m::mock('PhotoTree\Bundle\AlbumBundle\Domain\Person')
         ));
-        $participant2 = m::mock('PhotoTree\Bundle\AlbumBundle\Domain\Event\Participant', array(
+        $participant2 = m::mock('PhotoTree\Bundle\AlbumBundle\Domain\Event\Participant\Participant', array(
             'getPerson' => m::mock('PhotoTree\Bundle\AlbumBundle\Domain\Person')
         ));
 
@@ -44,16 +44,17 @@ class EventTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @depends testAnEventCanHaveAParticipant
+     * @expectedException PhotoTree\Bundle\AlbumBundle\Domain\Exception\DomainException
      */
     public function testAPersonCannotParticipantMoreThanOnce()
     {
 
         $person = m::mock('PhotoTree\Bundle\AlbumBundle\Domain\Person');
-        $participant1 = m::mock('PhotoTree\Bundle\AlbumBundle\Domain\Event\Participant', array(
+        $participant1 = m::mock('PhotoTree\Bundle\AlbumBundle\Domain\Event\Participant\Participant', array(
             'getPerson' => $person
         ));
 
-        $participant2 = m::mock('PhotoTree\Bundle\AlbumBundle\Domain\Event\Participant', array(
+        $participant2 = m::mock('PhotoTree\Bundle\AlbumBundle\Domain\Event\Participant\Participant', array(
             'getPerson' => $person
         ));
 
@@ -62,8 +63,5 @@ class EventTest extends \PHPUnit_Framework_TestCase
         $event->addParticipant($participant1);
         $event->addParticipant($participant2);
 
-        $participants = $event->getParticipants();
-        $this->assertEquals(1, count($participants), 'Participant is 1');
-        $this->assertSame($person, $participants[0]->getPerson(), 'Participant is the same');
     }
 }

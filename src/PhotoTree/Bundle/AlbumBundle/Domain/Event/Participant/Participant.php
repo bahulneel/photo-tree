@@ -1,7 +1,8 @@
 <?php
-namespace PhotoTree\Bundle\AlbumBundle\Domain\Event;
+namespace PhotoTree\Bundle\AlbumBundle\Domain\Event\Participant;
 
 use PhotoTree\Bundle\AlbumBundle\Domain\Person;
+use PhotoTree\Bundle\AlbumBundle\Domain\Event\Role;
 
 class Participant
 {

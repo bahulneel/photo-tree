@@ -1,7 +1,9 @@
 <?php
-namespace PhotoTree\Bundle\AlbumBundle\Domain;
+namespace PhotoTree\Bundle\AlbumBundle\Domain\Event;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use PhotoTree\Bundle\AlbumBundle\Domain\Exception\DomainException;
+use PhotoTree\Bundle\AlbumBundle\Domain\Event\Participant\Participant;
 
 class Event
 {
@@ -19,14 +21,14 @@ class Event
     /**
      * Adds a participant to the event
      *
-     * @param Event\Participant $participant
+     * @param Participant $participant
      */
-    public function addParticipant(Event\Participant $participant)
+    public function addParticipant(Participant $participant)
     {
         /* @var $currentParticipant Event\Participant */
         foreach ($this->participants as $currentParticipant) {
             if ($participant->getPerson() == $currentParticipant->getPerson()) {
-                return;
+                throw new DomainException('A person can only participate once in an event');
             }
         }
         $this->participants->add($participant);

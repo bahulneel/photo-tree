@@ -1,5 +1,5 @@
 <?php
-namespace PhotoTree\Bundle\AlbumBundle\Domain\Event;
+namespace PhotoTree\Bundle\AlbumBundle\Domain\Event\Participant;
 
 use Mockery as m;
 
