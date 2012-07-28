@@ -26,8 +26,12 @@ class BirthTest extends \PHPUnit_Framework_TestCase
      */
     public function testABirthCanHaveOnlyOneChild()
     {
-        $child1 = m::mock('PhotoTree\Bundle\AlbumBundle\Domain\Event\Participant\Child');
-        $child2 = m::mock('PhotoTree\Bundle\AlbumBundle\Domain\Event\Participant\Child');
+        $child1 = m::mock('PhotoTree\Bundle\AlbumBundle\Domain\Event\Participant\Child', array(
+            'getPerson' => m::mock('PhotoTree\Bundle\AlbumBundle\Domain\Person')
+        ));
+        $child2 = m::mock('PhotoTree\Bundle\AlbumBundle\Domain\Event\Participant\Child', array(
+            'getPerson' => m::mock('PhotoTree\Bundle\AlbumBundle\Domain\Person')
+        ));
 
         $birth = new Birth;
         $birth->setChild($child1);
@@ -62,7 +66,9 @@ class BirthTest extends \PHPUnit_Framework_TestCase
      */
     public function testBirthParentsMustBeUnique()
     {
-        $parent = m::mock('PhotoTree\Bundle\AlbumBundle\Domain\Event\Participant\AParent');
+        $parent = m::mock('PhotoTree\Bundle\AlbumBundle\Domain\Event\Participant\AParent', array(
+            'getPerson' => m::mock('PhotoTree\Bundle\AlbumBundle\Domain\Person')
+        ));
 
         $birth = new Birth;
         $birth->addParent($parent);
@@ -74,8 +80,12 @@ class BirthTest extends \PHPUnit_Framework_TestCase
      */
     public function testABirthCanHaveTwoParents()
     {
-        $parent1 = m::mock('PhotoTree\Bundle\AlbumBundle\Domain\Event\Participant\AParent');
-        $parent2 = m::mock('PhotoTree\Bundle\AlbumBundle\Domain\Event\Participant\AParent');
+        $parent1 = m::mock('PhotoTree\Bundle\AlbumBundle\Domain\Event\Participant\AParent', array(
+            'getPerson' => m::mock('PhotoTree\Bundle\AlbumBundle\Domain\Person')
+        ));
+        $parent2 = m::mock('PhotoTree\Bundle\AlbumBundle\Domain\Event\Participant\AParent', array(
+            'getPerson' => m::mock('PhotoTree\Bundle\AlbumBundle\Domain\Person')
+        ));
 
         $birth = new Birth;
         $birth->addParent($parent1);
@@ -91,9 +101,15 @@ class BirthTest extends \PHPUnit_Framework_TestCase
      */
     public function testABirthCanHaveNoMoreThanTwoParents()
     {
-        $parent1 = m::mock('PhotoTree\Bundle\AlbumBundle\Domain\Event\Participant\AParent');
-        $parent2 = m::mock('PhotoTree\Bundle\AlbumBundle\Domain\Event\Participant\AParent');
-        $parent3 = m::mock('PhotoTree\Bundle\AlbumBundle\Domain\Event\Participant\AParent');
+        $parent1 = m::mock('PhotoTree\Bundle\AlbumBundle\Domain\Event\Participant\AParent', array(
+            'getPerson' => m::mock('PhotoTree\Bundle\AlbumBundle\Domain\Person')
+        ));
+        $parent2 = m::mock('PhotoTree\Bundle\AlbumBundle\Domain\Event\Participant\AParent', array(
+            'getPerson' => m::mock('PhotoTree\Bundle\AlbumBundle\Domain\Person')
+        ));
+        $parent3 = m::mock('PhotoTree\Bundle\AlbumBundle\Domain\Event\Participant\AParent', array(
+            'getPerson' => m::mock('PhotoTree\Bundle\AlbumBundle\Domain\Person')
+        ));
 
         $birth = new Birth;
         $birth->addParent($parent1);

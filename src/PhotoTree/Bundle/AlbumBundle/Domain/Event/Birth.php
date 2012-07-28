@@ -26,10 +26,7 @@ class Birth extends Event
      */
     public function setChild(Participant\Child $child)
     {
-        if ($this->child instanceof Participant\Child) {
-            throw new DomainException('Cannot have more than one child');
-        }
-        $this->child = $child;
+        $this->addParticipant($child);
     }
 
     /**
@@ -39,7 +36,8 @@ class Birth extends Event
      */
     public function getChild()
     {
-        return $this->child;
+        $children = $this->getParticipantsByType(__NAMESPACE__ . '\Participant\Child');
+        return $children[0];
     }
 
     /**
@@ -49,16 +47,7 @@ class Birth extends Event
      */
     public function addParent(Participant\AParent $parent)
     {
-        $parents = $this->getParents();
-        if (count($parents) == 2) {
-            throw new DomainException('Cannot have more than 2 birth parents');
-        }
-        foreach ($parents as $currentParent) {
-            if ($currentParent === $parent) {
-                throw new DomainException('Cannot add same parent twice');
-            }
-        }
-        $this->parents[] = $parent;
+        $this->addParticipant($parent);
     }
 
     /**
@@ -68,6 +57,26 @@ class Birth extends Event
      */
     public function getParents()
     {
-        return $this->parents;
+        $parents = $this->getParticipantsByType(__NAMESPACE__ . '\Participant\AParent');
+        return $parents;
+    }
+
+    /**
+     * {inheritdoc}
+     * @return array
+     */
+    public function loadConstraints()
+    {
+        return array(
+            array(
+                'type' => __NAMESPACE__ . '\Participant\Child',
+                'max' => 1,
+                'message' => 'A birth can have only one child'
+            ),
+            array(
+                'type' => __NAMESPACE__ . '\Participant\AParent',
+                'max' => 2
+            )
+        );
     }
 }
