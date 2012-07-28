@@ -8,6 +8,8 @@ use PhotoTree\Bundle\AlbumBundle\Domain\Event\Death;
 use PhotoTree\Bundle\AlbumBundle\Domain\Event\Participant\Participant;
 use PhotoTree\Bundle\AlbumBundle\Domain\Event\Participant\Child;
 use PhotoTree\Bundle\AlbumBundle\Domain\Event\Participant\Deceased;
+use PhotoTree\Bundle\AlbumBundle\Domain\Name\Name;
+use PhotoTree\Bundle\AlbumBundle\Domain\Gender\AbstractGender;
 
 class Person extends Individual
 {
@@ -16,6 +18,12 @@ class Person extends Individual
      * @var ArrayCollection
      */
     private $roles;
+
+    /**
+     *
+     * @var AbstractGender
+     */
+    private $gender;
 
     public function __construct()
     {
@@ -50,7 +58,7 @@ class Person extends Individual
         if (
             $event instanceof Death &&
             $role instanceof Deceased &&
-            null !== $this->getDeath()
+            $this->getDeath() instanceof Death
         ) {
             throw new Exception\DomainException('Cannot die more than once');
         }
@@ -104,6 +112,10 @@ class Person extends Individual
         return $children;
     }
 
+    /**
+     *
+     * @return Birth
+     */
     public function getBirth()
     {
 
@@ -117,6 +129,10 @@ class Person extends Individual
         return null;
     }
 
+    /**
+     *
+     * @return Death
+     */
     public function getDeath()
     {
         $deathRoles = $this->getRolesByType(__NAMESPACE__ . '\Event\Participant\Deceased');
@@ -126,16 +142,149 @@ class Person extends Individual
         return null;
     }
 
+    /**
+     *
+     * @return array
+     */
     public function getBirthParents()
     {
         $parents = array();
 
         $birth = $this->getBirth();
 
-        foreach ($birth->getParents() as $parent) {
-            $parents[] = $parent->getPerson();
+        foreach ($birth->getParents() as $parentRole) {
+            $parents[] = $parentRole->getPerson();
         }
 
         return $parents;
+    }
+
+    /**
+     *
+     * @return Person
+     */
+    public function getSpouse()
+    {
+        $spouseRoles = $this->getRolesByType(__NAMESPACE__ . '\Event\Participant\Spouse');
+
+        $spouse = null;
+
+        foreach ($spouseRoles as $spouseRole) {
+            $currentSpouse = $spouseRole->getSpouse();
+            if (!$currentSpouse) {
+                continue;
+            }
+            if ($currentSpouse->getPerson()->getDeath()) {
+                continue;
+            }
+            if (null === $spouse) {
+                $spouse = $currentSpouse;
+                continue;
+            }
+            if ($spouseRole->getEvent()->isAfter($spouse->getEvent())) {
+                $spouse = $currentSpouse;
+            }
+        }
+
+        if ($spouse) {
+            return $spouse->getPerson();
+        }
+
+        return null;
+    }
+
+    /**
+     *
+     * @return array
+     */
+    public function getSpouses()
+    {
+        $spouses = array();
+
+        $spouseRoles = $this->getRolesByType(__NAMESPACE__ . '\Event\Participant\Spouse');
+
+        foreach ($spouseRoles as $spouseRole) {
+            $spouse = $spouseRole->getSpouse();
+            if ($spouse) {
+                $spouses[] = $spouse->getPerson();
+            }
+        }
+
+        return $spouses;
+    }
+
+    /**
+     *
+     * @return Name
+     */
+    public function getBirthName()
+    {
+        $birth = $this->getBirth();
+        if (!$birth) {
+            return null;
+        }
+        return $birth->getChild()->getName();
+    }
+
+    /**
+     *
+     * @return Name
+     */
+    public function getMarriedName()
+    {
+        $spouseRoles = $this->getRolesByType(__NAMESPACE__ . '\Event\Participant\Spouse');
+
+        $name = null;
+
+        foreach ($spouseRoles as $spouseRole) {
+            if (null === $name) {
+                $name = $spouseRole->getName();
+            }
+        }
+
+        return $name;
+    }
+
+    /**
+     *
+     * @return Name
+     */
+    public function getCurrentName()
+    {
+        $name = $this->getBirthName();
+        $marriedName = $this->getMarriedName();
+
+        if ($marriedName) {
+            $name = $marriedName;
+        }
+
+        return $name;
+    }
+
+    public function getLineages()
+    {
+        $birth = $this->getBirth();
+
+        if (!$birth) {
+            return array();
+        }
+
+        $child = $birth->getChild();
+
+        if (!$child) {
+            return array();
+        }
+
+        return $child->getLineages();
+    }
+
+    public function setGender(AbstractGender $gender)
+    {
+        $this->gender = $gender;
+    }
+
+    public function getGender()
+    {
+        return $this->gender;
     }
 }

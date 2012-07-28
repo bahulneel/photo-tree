@@ -1,0 +1,19 @@
+PhotoTree\Bundle\AlbumBundle\Domain\Lineage\Lineage:
+    type: entity
+    table: lineage
+    inheritanceType: SINGLE_TABLE
+    discriminatorColumn:
+        name: type
+        type: string
+        length: 30
+    discriminatorMap:
+        lineage: Lineage
+        maternal: Maternal
+        paternal: Paternal
+    id:
+        id:
+            type: integer
+            generator: { strategy: AUTO }
+    fields:
+        value:
+            type: string

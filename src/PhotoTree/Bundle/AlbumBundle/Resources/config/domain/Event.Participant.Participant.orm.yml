@@ -1,0 +1,34 @@
+PhotoTree\Bundle\AlbumBundle\Domain\Event\Participant\Participant:
+    type: entity
+    table: event_participant
+    inheritanceType: SINGLE_TABLE
+    discriminatorColumn:
+        name: role
+        type: string
+        length: 30
+    discriminatorMap:
+        child: Child
+        deceased: Deceased
+        parent: AParent
+        participant: Participant
+        spouse: Spouse
+    id:
+        event:
+            associationKey: true
+        person:
+            associationKey: true
+    manyToOne:
+        event:
+            targetEntity: PhotoTree\Bundle\AlbumBundle\Domain\Event\Event
+            joinColumn:
+                name: event_id
+                referencedColumnName: id
+                onDelete: CASCADE
+            inversedBy: participants
+        person:
+            targetEntity: PhotoTree\Bundle\AlbumBundle\Domain\Person
+            joinColumn:
+                name: person_id
+                referencedColumnName: id
+                onDelete: CASCADE
+            inversedBy: roles

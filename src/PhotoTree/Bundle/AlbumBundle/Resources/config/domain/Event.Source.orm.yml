@@ -1,0 +1,22 @@
+PhotoTree\Bundle\AlbumBundle\Domain\Event\Source:
+    type: entity
+    table: event_source
+    id:
+        event:
+            associationKey: true
+        document:
+            associationKey: true
+    manyToOne:
+        event:
+            targetEntity: Event
+            joinColumn:
+                name: event_id
+                referencedColumnName: id
+                onDelete: CASCADE
+            inversedBy: sources
+        document:
+            targetEntity: PhotoTree\Bundle\AlbumBundle\Domain\Document
+            joinColumn:
+                name: document_id
+                referencedColumnName: id
+                onDelete: CASCADE

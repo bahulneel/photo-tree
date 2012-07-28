@@ -1,0 +1,2 @@
+PhotoTree\Bundle\AlbumBundle\Domain\Event\Participant\Deceased:
+    type: entity

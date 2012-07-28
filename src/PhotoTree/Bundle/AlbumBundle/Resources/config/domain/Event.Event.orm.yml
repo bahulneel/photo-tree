@@ -1,0 +1,28 @@
+PhotoTree\Bundle\AlbumBundle\Domain\Event\Event:
+    type: entity
+    table: event
+    inheritanceType: SINGLE_TABLE
+    discriminatorColumn:
+        name: type
+        type: string
+        length: 30
+    discriminatorMap:
+        event: Event
+        birth: Birth
+        death: Death
+        marriage: Marriage
+    id:
+        id:
+            type: integer
+            generator: { strategy: AUTO }
+    fields:
+        date:
+            type: datetime
+            nullable: true
+    oneToMany:
+        participants:
+            targetEntity: PhotoTree\Bundle\AlbumBundle\Domain\Event\Participant\Participant
+            mappedBy: event
+        sources:
+            targetEntity: Source
+            mappedBy: event

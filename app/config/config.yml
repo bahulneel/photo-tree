@@ -45,10 +45,18 @@ doctrine:
         user:     %database_user%
         password: %database_password%
         charset:  UTF8
+        types:
+            gender: PhotoTree\Bundle\AlbumBundle\Type\GenderType
 
     orm:
         auto_generate_proxy_classes: %kernel.debug%
         auto_mapping: true
+        mappings:
+            PhotoTreeAlbumBundle:
+                type: yml
+                dir: "Resources/config/domain"
+                prefix: PhotoTree\Bundle\AlbumBundle\Domain
+
 
 # Swiftmailer Configuration
 swiftmailer:

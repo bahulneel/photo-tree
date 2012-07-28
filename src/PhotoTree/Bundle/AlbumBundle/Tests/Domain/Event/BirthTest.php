@@ -156,4 +156,53 @@ class BirthTest extends \PHPUnit_Framework_TestCase
         $parents = $birth->getParents();
         $this->assertSame($parent, $parents[0], 'Parent is the same');
     }
+
+    public function testLineageIsPassedFromParentToChild()
+    {
+        $birth = new Birth;
+
+        $lineage = m::mock('PhotoTree\Bundle\AlbumBundle\Domain\Lineage\Lineage');
+
+        $parent = m::mock('PhotoTree\Bundle\AlbumBundle\Domain\Event\Participant\AParent', array(
+            'getPerson' => m::mock('PhotoTree\Bundle\AlbumBundle\Domain\Person'),
+            'getLineages' => array($lineage)
+        ));
+        $parent->shouldReceive('setEvent')->once()->with($birth);
+        $child = new Participant\Child();
+
+        $lineage->shouldReceive('isPassed')->with($parent, $child)->andReturn(true);
+
+        $birth->addParticipant($parent);
+        $birth->addParticipant($child);
+
+        $lineages = $child->getLineages();
+
+        $this->assertSame($lineage, $lineages[0], 'Lineage is passed');
+    }
+
+    /**
+     * @depends testLineageIsPassedFromParentToChild
+     */
+    public function testLineageIsConditionalyPassedFromParentToChild()
+    {
+        $birth = new Birth;
+
+        $lineage = m::mock('PhotoTree\Bundle\AlbumBundle\Domain\Lineage\Lineage');
+
+        $parent = m::mock('PhotoTree\Bundle\AlbumBundle\Domain\Event\Participant\AParent', array(
+            'getPerson' => m::mock('PhotoTree\Bundle\AlbumBundle\Domain\Person'),
+            'getLineages' => array($lineage)
+        ));
+        $parent->shouldReceive('setEvent')->once()->with($birth);
+
+        $child = new Participant\Child();
+        $lineage->shouldReceive('isPassed')->with($parent, $child)->andReturn(false);
+
+        $birth->addParticipant($parent);
+        $birth->addParticipant($child);
+
+        $lineages = $child->getLineages();
+
+        $this->assertEquals(0, count($lineages), 'Lineage is not passed');
+    }
 }

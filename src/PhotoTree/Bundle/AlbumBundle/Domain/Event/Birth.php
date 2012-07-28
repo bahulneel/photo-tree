@@ -23,6 +23,9 @@ class Birth extends Event
     public function getChild()
     {
         $children = $this->getParticipantsByType(__NAMESPACE__ . '\Participant\Child');
+        if (0 === count($children)) {
+            return null;
+        }
         return $children[0];
     }
 
@@ -45,6 +48,27 @@ class Birth extends Event
     {
         $parents = $this->getParticipantsByType(__NAMESPACE__ . '\Participant\AParent');
         return $parents;
+    }
+
+    public function addParticipant(Participant\Participant $participant)
+    {
+        parent::addParticipant($participant);
+        $child = $this->getChild();
+        if (!$child) {
+            return;
+        }
+        $parents = $this->getParents();
+        if (0 === count($parents)) {
+            return;
+        }
+        foreach ($parents as $parent) {
+            $lineages = $parent->getLineages();
+            foreach ($lineages as $lineage) {
+                if ($lineage->isPassed($parent, $child)) {
+                    $child->addLineage($lineage);
+                }
+            }
+        }
     }
 
     /**

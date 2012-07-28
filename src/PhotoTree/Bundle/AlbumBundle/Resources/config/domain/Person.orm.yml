@@ -1,0 +1,15 @@
+PhotoTree\Bundle\AlbumBundle\Domain\Person:
+    type: entity
+    table: person
+    id:
+        id:
+            type: integer
+            generator: { strategy: AUTO }
+    fields:
+        gender:
+            type: gender
+            nullable: true
+    oneToMany:
+        roles:
+            targetEntity: PhotoTree\Bundle\AlbumBundle\Domain\Event\Participant\Participant
+            mappedBy: person

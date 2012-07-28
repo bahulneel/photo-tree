@@ -3,10 +3,10 @@ namespace PhotoTree\Bundle\AlbumBundle\Domain;
 
 class IndividualTest extends \PHPUnit_Framework_TestCase
 {
-    public function testAnIndividualIsAUniqueEntity()
+    public function testAnIndividualIsAnEntity()
     {
         $ind = new Individual;
-        $this->assertObjectHasAttribute('id', $ind, 'Individual has an ID');
+        $this->assertInstanceOf('PhotoTree\Bundle\AlbumBundle\Domain\Entity', $ind, 'An Individual is an entity');
     }
 
 }

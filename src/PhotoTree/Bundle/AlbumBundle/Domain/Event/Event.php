@@ -4,8 +4,9 @@ namespace PhotoTree\Bundle\AlbumBundle\Domain\Event;
 use Doctrine\Common\Collections\ArrayCollection;
 use PhotoTree\Bundle\AlbumBundle\Domain\Exception\DomainException;
 use PhotoTree\Bundle\AlbumBundle\Domain\Event\Participant\Participant;
+use PhotoTree\Bundle\AlbumBundle\Domain\Entity;
 
-class Event
+class Event extends Entity
 {
     /**
      *
@@ -21,6 +22,12 @@ class Event
 
     /**
      *
+     * @var ArrayCollection
+     */
+    private $sources;
+
+    /**
+     *
      * @var \DateTime
      */
     private $date;
@@ -28,6 +35,7 @@ class Event
     public function __construct()
     {
         $this->participants = new ArrayCollection;
+        $this->sources = new ArrayCollection;
     }
 
     /**
@@ -179,7 +187,7 @@ class Event
     {
         $diff = $this->getInterval($event);
         if (!$diff) {
-            return true;
+            return false;
         }
         $invert = $diff->invert;
         return ($invert === 1);
@@ -193,9 +201,23 @@ class Event
     {
         $diff = $this->getInterval($event);
         if (!$diff) {
-            return true;
+            return false;
         }
         $invert = $diff->invert;
         return ($invert === 0);
+    }
+
+    public function addSource(Source $source)
+    {
+        if ($this->sources->contains($source)) {
+            return;
+        }
+        $source->setEvent($this);
+        $this->sources->add($source);
+    }
+
+    public function getSources()
+    {
+        return $this->sources;
     }
 }

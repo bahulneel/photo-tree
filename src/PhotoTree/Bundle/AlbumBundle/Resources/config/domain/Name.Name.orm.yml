@@ -1,0 +1,6 @@
+PhotoTree\Bundle\AlbumBundle\Domain\Name\Name:
+    type: entity
+    id:
+        id:
+            type: integer
+            generator: { strategy: AUTO }

@@ -5,6 +5,12 @@ use Mockery as m;
 
 class EventTest extends \PHPUnit_Framework_TestCase
 {
+    public function testAnEventIsAnEntity()
+    {
+        $ind = new Event;
+        $this->assertInstanceOf('PhotoTree\Bundle\AlbumBundle\Domain\Entity', $ind, 'An Event is an entity');
+    }
+
     public function testAnEventCanHaveAParticipant()
     {
         $participant = m::mock('PhotoTree\Bundle\AlbumBundle\Domain\Event\Participant\Participant');
@@ -120,5 +126,37 @@ class EventTest extends \PHPUnit_Framework_TestCase
 
         $date1->shouldReceive('diff')->with($date2)->andReturn($diff);
         $this->assertTrue($event2->isAfter($event1), 'Event 2 is after event 1');
+    }
+
+    public function testEventsCanHaveASource()
+    {
+        $source = m::mock('\PhotoTree\Bundle\AlbumBundle\Domain\Event\Source');
+
+        $event = new Event();
+
+        $source->shouldReceive('setEvent')->once()->with($event);
+
+        $event->addSource($source);
+
+        $sources = $event->getSources();
+
+        $this->assertSame($source, $sources[0]);
+    }
+
+    public function testEventsSourcesAreUnique()
+    {
+        $source = m::mock('\PhotoTree\Bundle\AlbumBundle\Domain\Event\Source');
+
+        $event = new Event();
+
+        $source->shouldReceive('setEvent')->once()->with($event);
+
+        $event->addSource($source);
+        $event->addSource($source);
+
+        $sources = $event->getSources();
+
+        $this->assertSame(1, count($sources));
+        $this->assertSame($source, $sources[0]);
     }
 }

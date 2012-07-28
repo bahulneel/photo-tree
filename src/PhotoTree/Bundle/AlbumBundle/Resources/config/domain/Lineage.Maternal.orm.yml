@@ -1,0 +1,2 @@
+PhotoTree\Bundle\AlbumBundle\Domain\Lineage\Maternal:
+    type: entity

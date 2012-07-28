@@ -166,4 +166,157 @@ class PersonTest extends \PHPUnit_Framework_TestCase
         $person->participate($death, new Event\Participant\Deceased);
         $person->participate($event, new Event\Participant\Participant);
     }
+
+    public function testAPersonCanHaveASpouse()
+    {
+        $person1 = new Person;
+
+        $person2 = new Person;
+
+        $marriage = new Event\Marriage;
+
+        $person1->participate($marriage, new Event\Participant\Spouse());
+        $person2->participate($marriage, new Event\Participant\Spouse());
+
+        $this->assertSame($person2, $person1->getSpouse());
+        $this->assertSame($person1, $person2->getSpouse());
+    }
+
+    public function testAPersonCanHaveMoreThanOneSpouse()
+    {
+        $person1 = new Person;
+
+        $person2 = new Person;
+
+        $person3 = new Person;
+
+        $marriage1 = new Event\Marriage;
+        $marriage2 = new Event\Marriage;
+
+        $person1->participate($marriage1, new Event\Participant\Spouse());
+        $person2->participate($marriage1, new Event\Participant\Spouse());
+
+        $person1->participate($marriage2, new Event\Participant\Spouse());
+        $person3->participate($marriage2, new Event\Participant\Spouse());
+
+        $spouses = $person1->getSpouses();
+
+        $this->assertSame($person2, $spouses[0], 'Person 2 is the first spouse');
+        $this->assertSame($person3, $spouses[1], 'Person 3 is the second spouse');
+    }
+
+    public function testAPersonsSpouseIsTheMostRecentSpouse()
+    {
+        $person1 = new Person;
+
+        $person2 = new Person;
+
+        $person3 = new Person;
+
+        $marriage1 = new Event\Marriage;
+        $marriage1->setDate(new \DateTime('yesterday'));
+
+        $marriage2 = new Event\Marriage;
+        $marriage2->setDate(new \DateTime('today'));
+
+        $person1->participate($marriage1, new Event\Participant\Spouse());
+        $person2->participate($marriage1, new Event\Participant\Spouse());
+
+        $person1->participate($marriage2, new Event\Participant\Spouse());
+        $person3->participate($marriage2, new Event\Participant\Spouse());
+
+        $this->assertSame($person3, $person1->getSpouse(), 'Person 3 is the current spouse');
+    }
+
+    public function testAPersonHasNoSpouseIfTheSpouseIsDead()
+    {
+        $person1 = new Person;
+
+        $person2 = new Person;
+
+        $marriage = new Event\Marriage;
+
+        $person1->participate($marriage, new Event\Participant\Spouse());
+        $person2->participate($marriage, new Event\Participant\Spouse());
+
+        $death = new Event\Death();
+        $person2->participate($death, new Event\Participant\Deceased);
+
+        $this->assertNull($person1->getSpouse());
+    }
+
+    public function testAPersonCanHaveABirthName()
+    {
+        $person = new Person();
+
+        $birth = new Event\Birth();
+
+        $person->participate($birth, new Event\Participant\Child());
+
+        $name = m::mock('PhotoTree\Bundle\AlbumBundle\Domain\Name\Name');
+        $person->getBirth()->getChild()->setName($name);
+
+        $this->assertSame($name, $person->getBirthName());
+    }
+
+    public function testAPersonCanHaveAMarriedName()
+    {
+        $person = new Person();
+
+        $marriage = new Event\Marriage;
+
+        $name = m::mock('PhotoTree\Bundle\AlbumBundle\Domain\Name\Name');
+
+        $spouse = new Event\Participant\Spouse;
+        $spouse->setName($name);
+        $person->participate($marriage, $spouse);
+
+        $this->assertSame($name, $person->getMarriedName());
+    }
+
+    public function testCurrentNameIsBirthNameWithNoOtherChanges()
+    {
+        $person = new Person();
+
+        $birth = new Event\Birth();
+
+        $person->participate($birth, new Event\Participant\Child());
+
+        $name = m::mock('PhotoTree\Bundle\AlbumBundle\Domain\Name\Name');
+        $person->getBirth()->getChild()->setName($name);
+
+        $this->assertSame($name, $person->getCurrentName());
+    }
+
+    public function testCurrentNameIsMarriedNameIfNameChanged()
+    {
+        $person = new Person();
+
+        $birth = new Event\Birth();
+
+        $person->participate($birth, new Event\Participant\Child());
+
+        $name = m::mock('PhotoTree\Bundle\AlbumBundle\Domain\Name\Name');
+        $person->getBirth()->getChild()->setName($name);
+
+        $marriage = new Event\Marriage;
+
+        $mName = m::mock('PhotoTree\Bundle\AlbumBundle\Domain\Name\Name');
+
+        $spouse = new Event\Participant\Spouse;
+        $spouse->setName($mName);
+
+        $person->participate($marriage, $spouse);
+        $this->assertSame($mName, $person->getCurrentName());
+    }
+
+    public function testAPersonCanHaveGender()
+    {
+        $gender = m::mock('PhotoTree\Bundle\AlbumBundle\Domain\Gender\AbstractGender');
+
+        $person = new Person();
+        $person->setGender($gender);
+
+        $this->assertSame($gender, $person->getGender());
+    }
 }
