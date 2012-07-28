@@ -19,6 +19,12 @@ class Event
      */
     private $participants;
 
+    /**
+     *
+     * @var \DateTime
+     */
+    private $date;
+
     public function __construct()
     {
         $this->participants = new ArrayCollection;
@@ -94,6 +100,11 @@ class Event
         return $this->participants;
     }
 
+    /**
+     * Get the events participants by a specific type
+     *
+     * @return array
+     */
     public function getParticipantsByType($type)
     {
         $participants = array();
@@ -105,6 +116,13 @@ class Event
         return $participants;
     }
 
+    /**
+     * Checks if a new participant satisfies a constraint
+     *
+     * @param array $constraint
+     * @param Participant $participant
+     * @return boolean
+     */
     public function isSatisfiedBy(array $constraint, Participant $participant)
     {
         $type = $constraint['type'];
@@ -117,5 +135,67 @@ class Event
             return true;
         }
         return false;
+    }
+
+    /**
+     * Sets the events date
+     *
+     * @param \DateTime $date
+     */
+    public function setDate(\DateTime $date)
+    {
+        $this->date = $date;
+    }
+
+    /**
+     * Gets the events date
+     *
+     * @return \DateTime
+     */
+    public function getDate()
+    {
+        return $this->date;
+    }
+
+    public function getInterval(Event $event)
+    {
+        if (!$this->date) {
+            return null;
+        }
+        $eventDate = $event->getDate();
+        if (!$eventDate) {
+            return null;
+        }
+
+        return $eventDate->diff($this->date);
+    }
+
+    /**
+     *
+     * @param Event $event
+     * @return boolean
+     */
+    public function isBefore(Event $event)
+    {
+        $diff = $this->getInterval($event);
+        if (!$diff) {
+            return true;
+        }
+        $invert = $diff->invert;
+        return ($invert === 1);
+    }
+    /**
+     *
+     * @param Event $event
+     * @return boolean
+     */
+    public function isAfter(Event $event)
+    {
+        $diff = $this->getInterval($event);
+        if (!$diff) {
+            return true;
+        }
+        $invert = $diff->invert;
+        return ($invert === 0);
     }
 }

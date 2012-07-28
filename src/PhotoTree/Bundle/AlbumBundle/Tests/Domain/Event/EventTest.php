@@ -71,4 +71,54 @@ class EventTest extends \PHPUnit_Framework_TestCase
         $event->addParticipant($participant2);
 
     }
+
+    public function testAnEventCanHaveADate()
+    {
+        $date = m::mock('\DateTime');
+        $event = new Event();
+
+        $event->setDate($date);
+
+        $this->assertEquals($event->getDate(), $date, 'Dates are the same');
+    }
+
+    /**
+     * @depends testAnEventCanHaveADate
+     */
+    public function testAnEventCanOccurBeforeAnother()
+    {
+        $date1 = m::mock('\DateTime');
+        $event1 = new Event();
+        $event1->setDate($date1);
+
+        $date2 = m::mock('\DateTime');
+        $event2 = new Event();
+        $event2->setDate($date2);
+
+        $diff = m::mock();
+        $diff->invert = 1;
+
+        $date1->shouldReceive('diff')->with($date2)->andReturn($diff);
+        $this->assertTrue($event2->isBefore($event1), 'Event 2 is before event 1');
+    }
+
+    /**
+     * @depends testAnEventCanHaveADate
+     */
+    public function testAnEventCanOccurAfterAnother()
+    {
+        $date1 = m::mock('\DateTime');
+        $event1 = new Event();
+        $event1->setDate($date1);
+
+        $date2 = m::mock('\DateTime');
+        $event2 = new Event();
+        $event2->setDate($date2);
+
+        $diff = m::mock();
+        $diff->invert = 0;
+
+        $date1->shouldReceive('diff')->with($date2)->andReturn($diff);
+        $this->assertTrue($event2->isAfter($event1), 'Event 2 is after event 1');
+    }
 }

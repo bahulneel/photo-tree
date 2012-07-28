@@ -1,7 +1,9 @@
 <?php
 namespace PhotoTree\Bundle\AlbumBundle\Domain\Exception;
 
-class DomainException extends \RuntimeException
+use DomainException as PHPDomainException;
+
+class DomainException extends PHPDomainException
 {
 
 }
