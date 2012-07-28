@@ -6,20 +6,6 @@ use PhotoTree\Bundle\AlbumBundle\Domain\Exception\DomainException;
 class Birth extends Event
 {
     /**
-     * The Parents
-     *
-     * @var array
-     */
-    private $parents = array();
-
-    /**
-     * The Child
-     *
-     * @var Participant\Child
-     */
-    private $child;
-
-    /**
      * Sets the birth child
      *
      * @param Participant\Child $child

@@ -2,7 +2,7 @@
 namespace PhotoTree\Bundle\AlbumBundle\Domain\Event\Participant;
 
 use PhotoTree\Bundle\AlbumBundle\Domain\Person;
-use PhotoTree\Bundle\AlbumBundle\Domain\Event\Role;
+use PhotoTree\Bundle\AlbumBundle\Domain\Event\Event;
 
 class Participant
 {
@@ -14,13 +14,18 @@ class Participant
     private $person = null;
 
     /**
-     * The role the participant is playing
+     * The event participated in
      *
-     * @var Role
+     * @var Event
      */
-    private $role = null;
+    private $event = null;
 
-    public function __construct(Person $person)
+    /**
+     * Sets this participating person
+     *
+     * @param Person $person
+     */
+    public function setPerson(Person $person)
     {
         $this->person = $person;
     }
@@ -36,22 +41,22 @@ class Participant
     }
 
     /**
-     * Sets the role of the participant
+     * Sets the event participated in
      *
-     * @param Role $role
+     * @param Event $event
      */
-    public function setRole(Role $role)
+    public function setEvent(Event $event)
     {
-        $this->role = $role;
+        $this->event = $event;
     }
 
     /**
-     * Get the current role of the participant
+     * Gets the event participated in
      *
-     * @return Role
+     * @return Event
      */
-    public function getRole()
+    public function getEvent()
     {
-        return $this->role;
+        return $this->event;
     }
 }

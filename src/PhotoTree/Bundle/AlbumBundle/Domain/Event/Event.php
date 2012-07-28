@@ -39,6 +39,7 @@ class Event
                 throw new DomainException('A person can only participate once in an event');
             }
         }
+        $participant->setEvent($this);
         $this->participants->add($participant);
     }
 

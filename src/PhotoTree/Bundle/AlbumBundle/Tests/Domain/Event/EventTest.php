@@ -8,8 +8,9 @@ class EventTest extends \PHPUnit_Framework_TestCase
     public function testAnEventCanHaveAParticipant()
     {
         $participant = m::mock('PhotoTree\Bundle\AlbumBundle\Domain\Event\Participant\Participant');
-
         $event = new Event;
+
+        $participant->shouldReceive('setEvent')->once()->with($event);
 
         $this->assertEquals(0, count($event->getParticipants()), 'Events start with no participants');
 
@@ -33,6 +34,10 @@ class EventTest extends \PHPUnit_Framework_TestCase
         ));
 
         $event = new Event;
+
+        $participant1->shouldReceive('setEvent')->once()->with($event);
+        $participant2->shouldReceive('setEvent')->once()->with($event);
+
         $event->addParticipant($participant1);
         $event->addParticipant($participant2);
 
@@ -59,6 +64,8 @@ class EventTest extends \PHPUnit_Framework_TestCase
         ));
 
         $event = new Event;
+
+        $participant1->shouldReceive('setEvent')->once()->with($event);
 
         $event->addParticipant($participant1);
         $event->addParticipant($participant2);

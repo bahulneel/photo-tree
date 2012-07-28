@@ -8,18 +8,16 @@ class ParticipantTest extends \PHPUnit_Framework_TestCase
     public function testAPersonCanBeAParticipant()
     {
         $person = m::mock('PhotoTree\Bundle\AlbumBundle\Domain\Person');
-        $participant = new Participant($person);
+        $participant = new Participant();
+        $participant->setPerson($person);
         $this->assertSame($person, $participant->getPerson());
     }
 
-    public function testAParticipantCanHaveARole()
+    public function testAParticipantHasAnEvent()
     {
-        $person = m::mock('PhotoTree\Bundle\AlbumBundle\Domain\Person');
-        $participant = new Participant($person);
-
-        $role = m::mock('PhotoTree\Bundle\AlbumBundle\Domain\Event\Role');
-        $participant->setRole($role);
-
-        $this->assertSame($role, $participant->getRole());
+        $event = m::mock('PhotoTree\Bundle\AlbumBundle\Domain\Event\Event');
+        $participant = new Participant();
+        $participant->setEvent($event);
+        $this->assertSame($event, $participant->getEvent());
     }
 }

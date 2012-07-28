@@ -16,6 +16,9 @@ class BirthTest extends \PHPUnit_Framework_TestCase
         $child = m::mock('PhotoTree\Bundle\AlbumBundle\Domain\Event\Participant\Child');
 
         $birth = new Birth;
+
+        $child->shouldReceive('setEvent')->once()->with($birth);
+
         $birth->setChild($child);
         $this->assertSame($child, $birth->getChild(), 'Child is the same');
     }
@@ -34,6 +37,9 @@ class BirthTest extends \PHPUnit_Framework_TestCase
         ));
 
         $birth = new Birth;
+
+        $child1->shouldReceive('setEvent')->once()->with($birth);
+
         $birth->setChild($child1);
         $birth->setChild($child2);
     }
@@ -46,6 +52,9 @@ class BirthTest extends \PHPUnit_Framework_TestCase
         $child = m::mock('PhotoTree\Bundle\AlbumBundle\Domain\Event\Participant\Child');
 
         $birth = new Birth;
+
+        $child->shouldReceive('setEvent')->once()->with($birth);
+
         $birth->addParticipant($child);
         $this->assertSame($child, $birth->getChild(), 'Child is the same');
     }
@@ -55,6 +64,9 @@ class BirthTest extends \PHPUnit_Framework_TestCase
         $parent = m::mock('PhotoTree\Bundle\AlbumBundle\Domain\Event\Participant\AParent');
 
         $birth = new Birth;
+
+        $parent->shouldReceive('setEvent')->once()->with($birth);
+
         $birth->addParent($parent);
         $parents = $birth->getParents();
         $this->assertSame($parent, $parents[0], 'Parent is the same');
@@ -71,6 +83,9 @@ class BirthTest extends \PHPUnit_Framework_TestCase
         ));
 
         $birth = new Birth;
+
+        $parent->shouldReceive('setEvent')->once()->with($birth);
+
         $birth->addParent($parent);
         $birth->addParent($parent);
     }
@@ -88,6 +103,10 @@ class BirthTest extends \PHPUnit_Framework_TestCase
         ));
 
         $birth = new Birth;
+
+        $parent1->shouldReceive('setEvent')->once()->with($birth);
+        $parent2->shouldReceive('setEvent')->once()->with($birth);
+
         $birth->addParent($parent1);
         $birth->addParent($parent2);
         $parents = $birth->getParents();
@@ -112,6 +131,10 @@ class BirthTest extends \PHPUnit_Framework_TestCase
         ));
 
         $birth = new Birth;
+
+        $parent1->shouldReceive('setEvent')->once()->with($birth);
+        $parent2->shouldReceive('setEvent')->once()->with($birth);
+
         $birth->addParent($parent1);
         $birth->addParent($parent2);
         $birth->addParent($parent3);
@@ -126,6 +149,9 @@ class BirthTest extends \PHPUnit_Framework_TestCase
         $parent = m::mock('PhotoTree\Bundle\AlbumBundle\Domain\Event\Participant\AParent');
 
         $birth = new Birth;
+
+        $parent->shouldReceive('setEvent')->once()->with($birth);
+
         $birth->addParticipant($parent);
         $parents = $birth->getParents();
         $this->assertSame($parent, $parents[0], 'Parent is the same');
