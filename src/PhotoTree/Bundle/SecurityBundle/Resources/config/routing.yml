@@ -1,0 +1,9 @@
+PhotoTreeSecurityBundle_login:
+    pattern:   /login
+    defaults:  { _controller: PhotoTreeSecurityBundle:Security:login }
+
+PhotoTreeSecurityBundle_login_check:
+    pattern:   /login_check
+
+PhotoTreeSecurityBundle_logout:
+    pattern:   /logout

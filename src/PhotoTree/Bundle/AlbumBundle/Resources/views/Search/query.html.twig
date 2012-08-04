@@ -1,0 +1,16 @@
+{% extends 'PhotoTreeAlbumBundle::base.html.twig' %}
+{% block body %}
+<form method="POST">
+    <input type="text" name="query" value="{{ query }}" />
+    <input type="submit" />
+</form>
+{% if query %}
+<ul>
+{% for person in people %}
+    <li>
+        <a href="{{ path('PhotoTreeAlbumBundle_person', {id: person.id}) }}">{{ person.birthName.firstName }} {{ person.birthName.lastName }}</a>
+    </li>
+{% endfor %}
+</ul>
+{% endif %}
+{% endblock %}

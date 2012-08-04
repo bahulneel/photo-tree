@@ -4,15 +4,10 @@ namespace PhotoTree\Bundle\AlbumBundle\Domain\Event\Participant;
 use PhotoTree\Bundle\AlbumBundle\Domain\Name\Name;
 use Doctrine\Common\Collections\ArrayCollection;
 use PhotoTree\Bundle\AlbumBundle\Domain\Lineage\Lineage;
+use PhotoTree\Bundle\AlbumBundle\Domain\Person;
 
 class Child extends Participant implements HasNameInterface
 {
-    /**
-     *
-     * @var Name
-     */
-    private $name;
-
     /**
      *
      * @var ArrayCollection
@@ -28,11 +23,6 @@ class Child extends Participant implements HasNameInterface
     {
         $name->setParticipant($this);
         $this->name = $name;
-    }
-
-    public function getName()
-    {
-        return $this->name;
     }
 
     public function getParents()

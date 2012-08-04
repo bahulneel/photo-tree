@@ -1,0 +1,56 @@
+{% extends 'PhotoTreeAlbumBundle::base.html.twig' %}
+{% block body %}
+
+<h1>{{ person.birthName.firstName }} {{ person.birthName.lastName }}</h1>
+<p>Born on {{ person.birth.date.format('l jS F Y') }}</p>
+
+{% include 'PhotoTreeAlbumBundle:Person:timeline.html.twig' with { timeline: person.timeline } %}
+
+{% endblock %}
+
+{% block left %}
+{% set parents = person.birth.parents %}
+{% if parents|length > 0 %}
+<h2>Parents</h2>
+<ul>
+{% for parent in parents %}
+    <li>
+        <a href="{{ path('PhotoTreeAlbumBundle_person', {id: parent.person.id}) }}">{{ parent.person.birthName.firstName }} {{ parent.person.birthName.lastName }}</a>
+    </li>
+{% endfor %}
+</ul>
+{% endif %}
+{% set spouse = person.spouse %}
+{%if spouse %}
+<h2>Spouse</h2>
+<ul>
+    <li>
+        <a href="{{ path('PhotoTreeAlbumBundle_person', {id: spouse.id}) }}">{{ spouse.birthName.firstName }} {{ spouse.birthName.lastName }}</a>
+    </li>
+</ul>
+{% endif %}
+{% set children = person.children %}
+{%if children|length > 0 %}
+<h2>Children</h2>
+<ul>
+{% for child in children %}
+    <li>
+        <a href="{{ path('PhotoTreeAlbumBundle_person', {id: child.id}) }}">{{ child.birthName.firstName }} {{ child.birthName.lastName }}</a>
+    </li>
+{% endfor %}
+</ul>
+{% endif %}
+
+{% set siblings = person.siblings %}
+{%if siblings|length > 0 %}
+<h2>Siblings</h2>
+<ul>
+{% for sibling in siblings %}
+    <li>
+        <a href="{{ path('PhotoTreeAlbumBundle_person', {id: sibling.id}) }}">{{ sibling.birthName.firstName }} {{ sibling.birthName.lastName }}</a>
+    </li>
+{% endfor %}
+</ul>
+{% endif %}
+
+{% endblock %}

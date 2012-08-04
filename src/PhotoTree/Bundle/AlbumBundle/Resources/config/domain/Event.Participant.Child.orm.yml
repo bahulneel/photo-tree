@@ -1,12 +1,5 @@
 PhotoTree\Bundle\AlbumBundle\Domain\Event\Participant\Child:
     type: entity
-    oneToOne:
-        name:
-            targetEntity: PhotoTree\Bundle\AlbumBundle\Domain\Name\Name
-            joinColumn:
-                name: name_id
-                referencedColumnName: id
-                inversedBy: participant
     manyToMany:
         lineages:
             targetEntity: PhotoTree\Bundle\AlbumBundle\Domain\Lineage\Lineage

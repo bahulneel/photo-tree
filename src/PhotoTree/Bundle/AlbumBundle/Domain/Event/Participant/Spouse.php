@@ -5,17 +5,10 @@ use PhotoTree\Bundle\AlbumBundle\Domain\Name\Name;
 
 class Spouse extends Participant implements HasNameInterface
 {
-    private $name;
-
     public function setName(Name $name)
     {
         $name->setParticipant($this);
         $this->name = $name;
-    }
-
-    public function getName()
-    {
-        return $this->name;
     }
 
     public function getSpouse()

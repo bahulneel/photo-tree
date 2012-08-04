@@ -1,6 +1,10 @@
+PhotoTreeSecurityBundle:
+    resource: "@PhotoTreeSecurityBundle/Resources/config/routing.yml"
+    prefix:   /phototree/
+
 PhotoTreeAlbumBundle:
     resource: "@PhotoTreeAlbumBundle/Resources/config/routing.yml"
-    prefix:   /
+    prefix:   /phototree/
 
 # Internal routing configuration to handle ESI
 #_internal:

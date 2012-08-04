@@ -35,7 +35,8 @@ class Marriage extends Event
         return array(
             array(
                 'type' => __NAMESPACE__ . '\Participant\Spouse',
-                'max' => 2
+                'max' => 2,
+                'message' => 'Can only have 2 spouses'
             )
         );
     }

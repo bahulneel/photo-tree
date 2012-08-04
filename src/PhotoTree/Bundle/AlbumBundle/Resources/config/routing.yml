@@ -1,3 +1,11 @@
 PhotoTreeAlbumBundle_homepage:
-    pattern:  /hello/{name}
+    pattern:  /
     defaults: { _controller: PhotoTreeAlbumBundle:Default:index }
+
+PhotoTreeAlbumBundle_search:
+    pattern:  /search
+    defaults: { _controller: PhotoTreeAlbumBundle:Search:query }
+
+PhotoTreeAlbumBundle_person:
+    pattern:  /person/{id}
+    defaults: { _controller: PhotoTreeAlbumBundle:Person:view }

@@ -7,6 +7,12 @@ use PhotoTree\Bundle\AlbumBundle\Domain\Event\Event;
 class Participant
 {
     /**
+     *
+     * @var Name
+     */
+    protected $name = null;
+    
+    /**
      * The participating person
      *
      * @var Person
@@ -19,7 +25,7 @@ class Participant
      * @var Event
      */
     private $event = null;
-
+	
     /**
      * Sets this participating person
      *
@@ -58,5 +64,11 @@ class Participant
     public function getEvent()
     {
         return $this->event;
+    }
+    
+    
+    public function getName()
+    {
+        return $this->name;
     }
 }

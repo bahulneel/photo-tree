@@ -49,7 +49,7 @@ class Event extends Entity
 
         /* @var $currentParticipant Event\Participant */
         foreach ($this->participants as $currentParticipant) {
-            if ($participant->getPerson() == $currentParticipant->getPerson()) {
+            if ($participant->getPerson() === $currentParticipant->getPerson()) {
                 throw new DomainException('A person can only participate once in an event');
             }
         }

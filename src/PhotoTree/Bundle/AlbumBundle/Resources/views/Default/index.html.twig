@@ -1,1 +1,4 @@
-Hello {{ name }}!
+{% extends 'PhotoTreeAlbumBundle::base.html.twig' %}
+{% block body %}
+Welcome {% if app.user %} {{ app.user.username }} {% endif %}
+{% endblock %}

@@ -13,3 +13,4 @@ PhotoTree\Bundle\AlbumBundle\Domain\Person:
         roles:
             targetEntity: PhotoTree\Bundle\AlbumBundle\Domain\Event\Participant\Participant
             mappedBy: person
+            cascade: [ all ]

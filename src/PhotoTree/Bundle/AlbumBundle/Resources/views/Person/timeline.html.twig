@@ -1,0 +1,10 @@
+{% if timeline|length %}
+<h2>TimeLine</h1>
+<ul>
+    {% for event in timeline.events %}
+    <li>
+        {% include event.template %}
+    </li>
+    {% endfor %}
+</ul>
+{% endif %}

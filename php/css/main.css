@@ -1,0 +1,37 @@
+body {
+  width: 100%;
+}
+
+.head {
+   background-color: #aaa;
+   margin: 5px;
+} 
+
+.head .menu, .head .search {
+	float: right;
+	padding-right: 10px;
+}
+
+.content {
+    margin-left: 200px;
+}
+
+.left {
+   float: left;
+   background-color: #aaa;
+   margin: 5px;
+   width: 200px;
+}
+
+.right {
+   float: right;
+   background-color: #aaa;
+   margin: 5px;
+   width: 200px;
+}
+
+.foot {
+   clear: both;
+   background-color: #aaa;
+   margin: 5px;
+}

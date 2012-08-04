@@ -1,9 +1,2 @@
 PhotoTree\Bundle\AlbumBundle\Domain\Event\Participant\Spouse:
     type: entity
-    oneToOne:
-        name:
-            targetEntity: PhotoTree\Bundle\AlbumBundle\Domain\Name\Name
-            joinColumn:
-                name: name_id
-                referencedColumnName: id
-                inversedBy: participant

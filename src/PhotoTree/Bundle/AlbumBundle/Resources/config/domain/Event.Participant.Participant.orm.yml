@@ -32,3 +32,11 @@ PhotoTree\Bundle\AlbumBundle\Domain\Event\Participant\Participant:
                 referencedColumnName: id
                 onDelete: CASCADE
             inversedBy: roles
+    oneToOne:
+        name:
+            targetEntity: PhotoTree\Bundle\AlbumBundle\Domain\Name\Name
+            joinColumn:
+                name: name_id
+                referencedColumnName: id
+            inversedBy: participant
+            cascade: [ all ]

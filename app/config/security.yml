@@ -23,20 +23,20 @@ security:
             security: false
 
         login:
-            pattern:  ^/demo/secured/login$
+            pattern:  ^/phototree/login$
             security: false
 
         secured_area:
-            pattern:    ^/demo/secured/
+            pattern:    ^/phototree/
             form_login:
-                check_path: /demo/secured/login_check
-                login_path: /demo/secured/login
+                check_path: /phototree/login_check
+                login_path: /phototree/login
             logout:
-                path:   /demo/secured/logout
-                target: /demo/
+                path:   /phototree/logout
+                target: /phototree/
             #anonymous: ~
             #http_basic:
-            #    realm: "Secured Demo Area"
+            #    realm: "Secured phototree Area"
 
     access_control:
         #- { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }

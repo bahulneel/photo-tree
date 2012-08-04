@@ -2,6 +2,7 @@
 namespace PhotoTree\Bundle\AlbumBundle\Domain;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use PhotoTree\Bundle\AlbumBundle\App;
 use PhotoTree\Bundle\AlbumBundle\Domain\Event\Event;
 use PhotoTree\Bundle\AlbumBundle\Domain\Event\Birth;
 use PhotoTree\Bundle\AlbumBundle\Domain\Event\Death;
@@ -120,6 +121,7 @@ class Person extends Individual
     {
 
         $childRoles = $this->getRolesByType(__NAMESPACE__ . '\Event\Participant\Child');
+
         /* @var $role Event\Participant\Child */
         foreach ($childRoles as $role) {
             if ($role->getEvent() instanceof Birth) {
@@ -261,6 +263,22 @@ class Person extends Individual
         return $name;
     }
 
+    public function getSiblings()
+    {
+        $parents = $this->getBirth()->getParents();
+        $siblings = new ArrayCollection();
+        
+        foreach ($parents as $parent) {
+            $children = $parent->getPerson()->getChildren();
+            foreach ($children as $child) {
+                if ($this !== $child && !$siblings->contains($child)) {
+                    $siblings->add($child);
+                }
+            }
+        }
+        return $siblings;
+    }
+    
     public function getLineages()
     {
         $birth = $this->getBirth();
@@ -286,5 +304,13 @@ class Person extends Individual
     public function getGender()
     {
         return $this->gender;
+    }
+    
+    public function getTimeline()
+    {
+        $roles = $this->getRoles();
+        $timeline = new App\Timeline;
+        $timeline->addRoles($roles);
+        return $timeline;
     }
 }

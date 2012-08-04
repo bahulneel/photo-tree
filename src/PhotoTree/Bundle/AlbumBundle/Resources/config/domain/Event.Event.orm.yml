@@ -23,6 +23,7 @@ PhotoTree\Bundle\AlbumBundle\Domain\Event\Event:
         participants:
             targetEntity: PhotoTree\Bundle\AlbumBundle\Domain\Event\Participant\Participant
             mappedBy: event
+            cascade: [ all ]
         sources:
             targetEntity: Source
             mappedBy: event
