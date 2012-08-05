@@ -44,16 +44,26 @@ class LoadPeopleData implements FixtureInterface
         $mayur->setGender(new Domain\Gender\Male);
         $mayur->setProfileImage(new Domain\Document\Image('mayur_Upadhyaya.jpg'));
         
-        $lucia = $this->person($manager, 'Lucia', 'Ostrihonová', '26 Sep 1980');
+        $lucia = $this->person($manager, 'Lucia', 'Ostrihonova', '26 Sep 1980');
         $lucia->setProfileImage(new Domain\Document\Image('Lucia_Upadhyaya.jpg'));
 
         $carletta = $this->person($manager, 'Carletta', 'Upadhyaya', '16th Oct 2010');
         $carletta->setProfileImage(new Domain\Document\Image('Carletta_Upadhyaya.jpg'));
         
-        $this->marry($manager, $mansukhlal, $saraswati, new Domain\Name\Name('Saraswati', 'Upadhyaya'));
+        $image = new Domain\Document\Image('Bhai_MJU wed_1937 Modified_reduced.jpg');
+        $manager->persist($image);
+        $manager->flush();
+        $this->marry($manager, $mansukhlal, $saraswati, new Domain\Name\Name('Saraswati', 'Upadhyaya'))
+             ->addSource(new Domain\Event\Source($image));
+             
         $this->marry($manager, $mahesh, $pramila, new Domain\Name\Name('Pramila', 'Upadhyaya'), '5 Jul 1966');
         
-        $this->marry($manager, $mahesh, $vinod, new Domain\Name\Name('Vinod', 'Upadhyaya'), '7th Aug 1976');
+        $image = new Domain\Document\Image('wedding_Mahesh_Vinodini.jpg');
+        $manager->persist($image);
+        $manager->flush();
+        $this->marry($manager, $mahesh, $vinod, new Domain\Name\Name('Vinod', 'Upadhyaya'), '7th Aug 1976')
+             ->addSource(new Domain\Event\Source($image));
+        
         $this->marry($manager, $mayur, $lucia, new Domain\Name\Name('Lucia', 'Upadhyaya'), '28 June 2003');
         
         $this->addParent($mahesh, $mansukhlal);
@@ -121,6 +131,7 @@ class LoadPeopleData implements FixtureInterface
         $wifeSpouse->setName($wifeName);
         $wife->participate($marriage, $wifeSpouse);
         
+        return $marriage;
     }
     
     public function addParent(Domain\Person $child, Domain\Person $parent)
