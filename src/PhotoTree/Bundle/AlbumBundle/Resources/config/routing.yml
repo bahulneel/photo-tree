@@ -9,3 +9,6 @@ PhotoTreeAlbumBundle_search:
 PhotoTreeAlbumBundle_person:
     pattern:  /person/{id}
     defaults: { _controller: PhotoTreeAlbumBundle:Person:view }
+
+PhotoTreeAlbumBundle_images:
+    pattern: /documents/images/{path}

@@ -13,13 +13,18 @@ class LoadPeopleData implements FixtureInterface
     public function load(ObjectManager $manager)
     {
         $bahul = $this->person($manager, 'Bahul', 'Upadhyaya', '9th June 1978');
+        $bahul->setProfileImage(new Domain\Document\Image('bahul.jpg'));
         $mayur = $this->person($manager, 'Mayur', 'Upadhyaya', '9th June 1978');
         $mayur->setGender(new Domain\Gender\Male);
+        $mayur->setProfileImage(new Domain\Document\Image('mayur_Upadhyaya.jpg'));
         
         $vinod = $this->person($manager, 'Vinod', 'Travadi', '2nd May 1946');
+        $vinod->setProfileImage(new Domain\Document\Image('Vinodini_Travadi.jpg'));
+        
         $mahesh = $this->person($manager, 'Mahesh', 'Upadhyaya', '4th Nov 1942');
         $mahesh->setGender(new Domain\Gender\Male);
         $mahesh->getBirth()->getChild()->addLineage(new Domain\Lineage\Hindu\Gotra('Kautchchhas'));
+        $mahesh->setProfileImage(new Domain\Document\Image('mahesh ecuador.jpg'));
         
         $this->addParent($bahul, $vinod);
         $this->addParent($bahul, $mahesh);
@@ -29,8 +34,16 @@ class LoadPeopleData implements FixtureInterface
         
         $this->marry($manager, $mahesh, $vinod, new Domain\Name\Name('Vinod', 'Upadhyaya'), '7th Aug 1976');
         
+        $lucia = $this->person($manager, 'Lucia', 'Ostrihonová', '26 Sep 1980');
+        $lucia->setProfileImage(new Domain\Document\Image('Lucia_Upadhyaya.jpg'));
+        
+        $this->marry($manager, $mayur, $lucia, new Domain\Name\Name('Lucia', 'Upadhyaya'), '28 June 2003');
+        
         $carletta = $this->person($manager, 'Carletta', 'Upadhyaya', '16th Oct 2010');
+        $carletta->setProfileImage(new Domain\Document\Image('Carletta_Upadhyaya.jpg'));
+        
         $this->addParent($carletta, $mayur);
+        $this->addParent($carletta, $lucia);
         
         $manager->flush();
     }

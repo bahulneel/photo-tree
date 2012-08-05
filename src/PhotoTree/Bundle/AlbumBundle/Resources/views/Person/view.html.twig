@@ -1,6 +1,9 @@
 {% extends 'PhotoTreeAlbumBundle::base.html.twig' %}
 {% block body %}
 
+{% if person.profileImage %}
+<img class="profile" src="{{ path('PhotoTreeAlbumBundle_images', { path: person.profileImage.path }) }}" />
+{% endif %}
 <h1>{{ person.birthName.firstName }} {{ person.birthName.lastName }}</h1>
 {% for lineage in person.birth.child.lineages %}
 <h3>{{ lineage.displayName }} {{ lineage.value }}</h3>
@@ -18,7 +21,7 @@
 <ul>
 {% for parent in parents %}
     <li>
-        <a href="{{ path('PhotoTreeAlbumBundle_person', {id: parent.person.id}) }}">{{ parent.person.birthName.firstName }} {{ parent.person.birthName.lastName }}</a>
+        {% include 'PhotoTreeAlbumBundle:Person:person.html.twig' with { person: parent.person } %}
     </li>
 {% endfor %}
 </ul>
@@ -28,7 +31,7 @@
 <h2>Spouse</h2>
 <ul>
     <li>
-        <a href="{{ path('PhotoTreeAlbumBundle_person', {id: spouse.id}) }}">{{ spouse.birthName.firstName }} {{ spouse.birthName.lastName }}</a>
+        {% include 'PhotoTreeAlbumBundle:Person:person.html.twig' with { person: spouse } %}
     </li>
 </ul>
 {% endif %}
@@ -38,7 +41,7 @@
 <ul>
 {% for child in children %}
     <li>
-        <a href="{{ path('PhotoTreeAlbumBundle_person', {id: child.id}) }}">{{ child.birthName.firstName }} {{ child.birthName.lastName }}</a>
+        {% include 'PhotoTreeAlbumBundle:Person:person.html.twig' with { person: child } %}
     </li>
 {% endfor %}
 </ul>
@@ -50,7 +53,7 @@
 <ul>
 {% for sibling in siblings %}
     <li>
-        <a href="{{ path('PhotoTreeAlbumBundle_person', {id: sibling.id}) }}">{{ sibling.birthName.firstName }} {{ sibling.birthName.lastName }}</a>
+        {% include 'PhotoTreeAlbumBundle:Person:person.html.twig' with { person: sibling } %}
     </li>
 {% endfor %}
 </ul>

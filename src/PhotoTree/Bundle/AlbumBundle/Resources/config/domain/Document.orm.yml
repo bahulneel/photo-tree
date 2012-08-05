@@ -1,7 +1,17 @@
 PhotoTree\Bundle\AlbumBundle\Domain\Document:
     type: entity
     table: document
+    inheritanceType: SINGLE_TABLE
+    discriminatorColumn:
+        name: type
+        type: string
+        length: 30
+    discriminatorMap:
+        image: PhotoTree\Bundle\AlbumBundle\Domain\Document\Image
     id:
         id:
             type: integer
             generator: { strategy: AUTO }
+    fields:
+        path:
+            type: string

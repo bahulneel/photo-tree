@@ -26,6 +26,8 @@ class Person extends Individual
      */
     private $gender;
 
+    private $profileImage;
+    
     public function __construct()
     {
         $this->roles = new ArrayCollection;
@@ -312,5 +314,15 @@ class Person extends Individual
         $timeline = new App\Timeline;
         $timeline->addRoles($roles);
         return $timeline;
+    }
+    
+    public function setProfileImage(Document\Image $image)
+    {
+        $this->profileImage = $image;
+    }
+    
+    public function getProfileImage()
+    {
+        return $this->profileImage;
     }
 }

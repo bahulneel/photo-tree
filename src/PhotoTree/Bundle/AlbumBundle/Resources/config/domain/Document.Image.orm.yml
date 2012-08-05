@@ -1,0 +1,2 @@
+PhotoTree\Bundle\AlbumBundle\Domain\Document\Image:
+    type: entity

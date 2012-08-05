@@ -14,3 +14,11 @@ PhotoTree\Bundle\AlbumBundle\Domain\Person:
             targetEntity: PhotoTree\Bundle\AlbumBundle\Domain\Event\Participant\Participant
             mappedBy: person
             cascade: [ all ]
+    oneToOne:
+        profileImage:
+            targetEntity: PhotoTree\Bundle\AlbumBundle\Domain\Document\Image
+            joinColumn:
+                name: profile_image_id
+                referencedColumnName: id
+            cascade: [ all ]
+            nullable: true

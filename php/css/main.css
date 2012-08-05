@@ -1,5 +1,6 @@
 body {
   width: 100%;
+  font-family: Arial,Helvetica,sans-serif;
 }
 
 .head {
@@ -18,7 +19,6 @@ body {
 
 .left {
    float: left;
-   background-color: #aaa;
    margin: 5px;
    width: 200px;
 }
@@ -34,4 +34,33 @@ body {
    clear: both;
    background-color: #aaa;
    margin: 5px;
+}
+
+.left h2 {
+   margin: 0 0 10px 0;
+   padding: 0;
+   text-align: center;
+   background-color: #aaa;
+   clear: both;
+}
+
+.left ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.left li {
+    clear: both;
+    text-align: center;
+}
+
+.left li p {
+    margin-top: 5px;
+}
+
+.content img.profile {
+    float: right;
+    padding: 0 10px;
+    width: 300px;
 }

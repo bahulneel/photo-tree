@@ -1,0 +1,4 @@
+{% if person.profileImage %}
+<a href="{{ path('PhotoTreeAlbumBundle_person', {id: person.id}) }}"><img width="50px" src="{{ path('PhotoTreeAlbumBundle_images', { path: person.profileImage.path }) }}" /></a>
+{% endif %}
+<p><a href="{{ path('PhotoTreeAlbumBundle_person', {id: person.id}) }}">{{ person.birthName.firstName }} {{ person.birthName.lastName }}</a></p>
