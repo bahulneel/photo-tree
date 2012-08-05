@@ -27,3 +27,4 @@ PhotoTree\Bundle\AlbumBundle\Domain\Event\Event:
         sources:
             targetEntity: Source
             mappedBy: event
+            cascade: [ all ]

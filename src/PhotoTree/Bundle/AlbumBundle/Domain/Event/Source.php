@@ -17,6 +17,11 @@ class Source
      */
     private $document;
 
+    public function __construct(Document $document)
+    {
+        $this->setDocument($document);
+    }
+    
     public function setEvent(Event $event)
     {
         $this->event = $event;

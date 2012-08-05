@@ -3,7 +3,10 @@
 <ul>
     {% for event in timeline.events %}
     <li>
-        {% include event.template %}
+        <p>{% include event.template %}</p>
+        {% for source in event.event.sources %}
+        <img height="50px" src="{{ path('PhotoTreeAlbumBundle_images', { path: source.document.path }) }}" />
+        {% endfor %}
     </li>
     {% endfor %}
 </ul>
