@@ -2,6 +2,9 @@
 {% block body %}
 
 <h1>{{ person.birthName.firstName }} {{ person.birthName.lastName }}</h1>
+{% for lineage in person.birth.child.lineages %}
+<h3>{{ lineage.displayName }} {{ lineage.value }}</h3>
+{% endfor %}
 <p>Born on {{ person.birth.date.format('l jS F Y') }}</p>
 
 {% include 'PhotoTreeAlbumBundle:Person:timeline.html.twig' with { timeline: person.timeline } %}

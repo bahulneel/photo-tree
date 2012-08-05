@@ -13,6 +13,8 @@ class Lineage extends Entity
      */
     private $value;
 
+    protected static $NAME = 'Lineage';
+    
     public function __construct($value = null)
     {
         $this->value = $value;
@@ -32,5 +34,10 @@ class Lineage extends Entity
     public function getValue()
     {
         return $this->value;
+    }
+    
+    public function getDisplayName()
+    {
+        return static::$NAME;
     }
 }

@@ -14,9 +14,12 @@ class LoadPeopleData implements FixtureInterface
     {
         $bahul = $this->person($manager, 'Bahul', 'Upadhyaya', '9th June 1978');
         $mayur = $this->person($manager, 'Mayur', 'Upadhyaya', '9th June 1978');
+        $mayur->setGender(new Domain\Gender\Male);
         
         $vinod = $this->person($manager, 'Vinod', 'Travadi', '2nd May 1946');
         $mahesh = $this->person($manager, 'Mahesh', 'Upadhyaya', '4th Nov 1942');
+        $mahesh->setGender(new Domain\Gender\Male);
+        $mahesh->getBirth()->getChild()->addLineage(new Domain\Lineage\Hindu\Gotra('Kautchchhas'));
         
         $this->addParent($bahul, $vinod);
         $this->addParent($bahul, $mahesh);

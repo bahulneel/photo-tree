@@ -13,3 +13,4 @@ PhotoTree\Bundle\AlbumBundle\Domain\Event\Participant\Child:
                 inverseJoinColumns:
                     lineage_id:
                         referencedColumnName: id
+            cascade: [ all ]

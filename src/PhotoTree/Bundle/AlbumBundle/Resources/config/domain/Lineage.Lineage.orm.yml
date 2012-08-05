@@ -10,6 +10,7 @@ PhotoTree\Bundle\AlbumBundle\Domain\Lineage\Lineage:
         lineage: Lineage
         maternal: Maternal
         paternal: Paternal
+        gotra: PhotoTree\Bundle\AlbumBundle\Domain\Lineage\Hindu\Gotra
     id:
         id:
             type: integer
