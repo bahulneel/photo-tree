@@ -11,7 +11,9 @@ class Timeline implements \Countable
     public function addRoles(Collection $roles)
     {
         foreach ($roles as $role) {
-            $this->events[] = new Timeline\Event($role);
+            if ($role->getEvent()->getDate()) {
+                $this->events[] = new Timeline\Event($role);
+            }
         }
     }
     

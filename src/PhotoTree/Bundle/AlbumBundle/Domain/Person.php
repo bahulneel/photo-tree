@@ -178,9 +178,7 @@ class Person extends Individual
             if (!$currentSpouse) {
                 continue;
             }
-            if ($currentSpouse->getPerson()->getDeath()) {
-                continue;
-            }
+            
             if (null === $spouse) {
                 $spouse = $currentSpouse;
                 continue;

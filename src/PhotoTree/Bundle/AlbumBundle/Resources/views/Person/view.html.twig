@@ -4,11 +4,16 @@
 {% if person.profileImage %}
 <img class="profile" src="{{ path('PhotoTreeAlbumBundle_images', { path: person.profileImage.path }) }}" />
 {% endif %}
-<h1>{{ person.birthName.firstName }} {{ person.birthName.lastName }}</h1>
+<h1>{{ person.birthName.firstName }} {{ person.birthName.lastName }} {% if person.death %}(deceased){% endif %}</h1>
 {% for lineage in person.birth.child.lineages %}
 <h3>{{ lineage.displayName }} {{ lineage.value }}</h3>
 {% endfor %}
+{% if person.birth %}
 <p>Born on {{ person.birth.date.format('l jS F Y') }}</p>
+{% endif %}
+{% if person.death %}
+<p>Died on {{ person.death.date.format('l jS F Y') }}</p>
+{% endif %}
 
 {% include 'PhotoTreeAlbumBundle:Person:timeline.html.twig' with { timeline: person.timeline } %}
 
